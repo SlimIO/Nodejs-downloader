@@ -20,7 +20,20 @@ const NODEJS_RELEASE = "https://nodejs.org/download/release";
  * @memberof Downloader#
  */
 const File = Object.freeze({
-    Headers: "-headers.tar.gz"
+    Headers: "-headers.tar.gz",
+    AixPPC64: "-aix-ppc64.tar.gz",
+    Darwin64: "-darwin-x64.tar.gz",
+    Arm64: "-linux-arm64.tar.gz",
+    Armv6l: "-linux-armv6l.tar.gz",
+    Armv7l: "-linux-armv7l.tar.gz",
+    PPC64le: "-linux-ppc64le.tar.gz",
+    S390x: "-linux-s390x.tar.gz",
+    Linux64: "-linux-x64.tar.gz",
+    SunOS64: "-sunos-x64.tar.gz",
+    WinBinary64: "-win-x64.zip",
+    WinBinary86: "-win-x86.zip",
+    WinExe64: "-x64.msi",
+    WinExe86: "-x86.msi"
 });
 
 /**
@@ -101,10 +114,20 @@ async function getNodeRelease(version) {
  * @param {!String} version node.js version where we have to found the requested file
  * @param {String} [fileName=tar.gz] node.js file name
  * @param {String} [destination] destination dir
- * @returns {Promise<void>}
+ * @returns {Promise<String>}
  *
  * @throws {TypeError}
  * @throws {Error}
+ *
+ * @example
+ * const { downloadNodeFile, constants: { File } } = require("@slimio/nodejs-downloader");
+ *
+ * async function main() {
+ *     const file = await downloadNodeFile("v11.0.0", File.Headers, "./headers");
+ *     console.log(`Headers.tar.gz location: ${file}`);
+ *     // Then extract tar.gz file
+ * }
+ * main().catch(console.error);
  */
 async function downloadNodeFile(version, fileName = ".tar.gz", destination = process.cwd()) {
     if (typeof version !== "string") {
@@ -117,14 +140,17 @@ async function downloadNodeFile(version, fileName = ".tar.gz", destination = pro
         throw new TypeError("destination must be a string");
     }
 
-    const fileUrl = new URL(`${NODEJS_RELEASE}/${version}/node-${version}${fileName}`);
+    const completeFileName = `node-${version}${fileName}`;
+    const fileUrl = new URL(`${NODEJS_RELEASE}/${version}/${completeFileName}`);
     const wS = got.stream(fileUrl);
+    const destFile = join(destination, completeFileName);
 
     await new Promise((resolve, reject) => {
-        wS.on("end", resolve);
-        wS.on("error", reject);
-        wS.pipe(createWriteStream(join(destination, fileName)));
+        wS.on("end", resolve).on("error", reject);
+        wS.pipe(createWriteStream(destFile));
     });
+
+    return destFile;
 }
 
 module.exports = {
