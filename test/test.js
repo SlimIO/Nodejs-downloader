@@ -4,10 +4,16 @@ const {
     constants: { File }
 } = require("../index");
 
-async function main() {
-    const release = await getNodeRelease("v11.0.0");
-    console.log(release);
+const { createGunzip } = require("zlib");
+const { createReadStream } = require("fs");
+const { join } = require("path");
 
-    await downloadNodeFile("v11.1.0", File.Headers, "./temp");
+const TEMP = join(__dirname, "..", "temp");
+
+async function main() {
+    const file = await downloadNodeFile("v11.1.0", File.WinExe64, TEMP);
+
+    createReadStream(file)
+        .pipe(createGunzip());
 }
 main().catch(console.error);
