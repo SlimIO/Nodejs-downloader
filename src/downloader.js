@@ -84,6 +84,15 @@ function getLocalNodeVersion() {
  * @returns {Promise<Release>}
  *
  * @throws {TypeError}
+ *
+ * @example
+ * const { getNodeRelease } = require("@slimio/nodejs-downloader");
+ *
+ * async function main() {
+ *     const release = await getNodeRelease("v8.0.0");
+ *     console.log(release);
+ * }
+ * main().catch(console.error);
  */
 async function getNodeRelease(version) {
     if (typeof version !== "string") {
