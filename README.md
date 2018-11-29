@@ -130,10 +130,11 @@ const dirName = await extract(tarFile);
 console.log(dirName);
 ```
 
-## Roadmap
+## Roadmap v0.2.0
 
 - Add `.zip` support to **extract** method.
-- Complete the file list.
+- Fix security issue with `tar-fs` package.
+- Complete the file list (not all files are supported).
 
 ## LICENCE
 MIT
