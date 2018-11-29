@@ -1,4 +1,8 @@
 # nodejs-downloader
+
+[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/SlimIO/nodejs-downloader/commit-activity)
+[![GitHub license](https://img.shields.io/github/license/Naereen/StrapDown.js.svg)](https://github.com/SlimIO/nodejs-downloader/blob/master/LICENSE)
+
 Node.js binary and headers downloader
 
 ## Getting Started
