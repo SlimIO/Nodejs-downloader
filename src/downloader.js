@@ -157,7 +157,7 @@ async function extract(file) {
  * @desc Download a given version Node.js file
  * @memberof Downloader#
  * @param {String} [fileName=tar.gz] node.js file name
- * @param {Object} options options
+ * @param {Object} [options] options
  * @param {String} [options.version] node.js version where we have to found the requested file (default equal to local Node.js version).
  * @param {String} [options.dest] destination dir (default equal to process.cwd())
  * @returns {Promise<String>}
