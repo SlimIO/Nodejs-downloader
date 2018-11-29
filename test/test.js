@@ -101,14 +101,18 @@ ava("extract tar.gz file", async(assert) => {
 
     await access(tarFile, R_OK);
     const dirName = await Downloader.extract(tarFile);
-    console.log(dirName);
+
     await unlink(tarFile);
     const stats = await stat(dirName);
     assert.true(stats.isDirectory());
 
-    rimraf(dirName, (error) => {
-        if (error) {
-            console.error(error);
-        }
+    await new Promise((resolve, reject) => {
+        rimraf(dirName, (error) => {
+            if (error) {
+                return reject(error);
+            }
+
+            return resolve();
+        });
     });
 });

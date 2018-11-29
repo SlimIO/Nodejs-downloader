@@ -2,6 +2,8 @@
 const { createWriteStream, createReadStream } = require("fs");
 const { createGunzip } = require("zlib");
 const { join, basename, extname, dirname } = require("path");
+const stream = require("stream");
+const { promisify } = require("util");
 
 // Require Third-party Dependencies
 const got = require("got");
@@ -10,6 +12,9 @@ const tar = require("tar-fs");
 // CONSTANTS
 const NODEJS_RELEASE_INDEX_URL = new URL("https://nodejs.org/download/release/index.json");
 const NODEJS_RELEASE = "https://nodejs.org/download/release";
+
+// Async Method
+const pipeline = promisify(stream.pipeline);
 
 /**
  * @namespace Downloader
@@ -117,14 +122,15 @@ async function extract(file) {
     const fileExt = extname(file);
     if (fileExt === ".gz") {
         const name = basename(file, ".tar.gz");
+        const destDirName = join(dirname(file), name);
 
-        const wS = createReadStream(file)
-            .pipe(createGunzip())
-            .pipe(tar.extract(join(dirname(file), name)));
+        await pipeline(
+            createReadStream(file),
+            createGunzip(),
+            tar.extract(destDirName)
+        );
 
-        await new Promise((resolve) => wS.on("end", resolve));
-
-        return name;
+        return destDirName;
     }
 
     throw new Error(`Unsupported extension ${fileExt}`);
