@@ -1,10 +1,12 @@
 // Require Node.js Dependencies
 const { spawnSync } = require("child_process");
-const { join } = require("path");
-const { createWriteStream } = require("fs");
+const { createWriteStream, createReadStream } = require("fs");
+const { createGunzip } = require("zlib");
+const { join, basename, extname, dirname } = require("path");
 
 // Require Third-party Dependencies
 const got = require("got");
+const tar = require("tar-fs");
 
 // CONSTANTS
 const NODEJS_RELEASE_INDEX_URL = new URL("https://nodejs.org/download/release/index.json");
@@ -54,7 +56,7 @@ function getLocalNodeVersion() {
         process.argv[0], ["-v"], { encoding: "utf8" }
     );
 
-    return stdout;
+    return stdout.replace(/\n|\r/g, "");
 }
 
 /**
@@ -108,45 +110,87 @@ async function getNodeRelease(version) {
  * @version 0.1.0
  *
  * @async
+ * @method extract
+ * @desc Extract tar.gz and .zip file
+ * @memberof Downloader#
+ * @param {!String} file file to extract
+ * @returns {Promise<String>}
+ *
+ * @throws {TypeError}
+ * @throws {Error}
+ */
+async function extract(file) {
+    if (typeof file !== "string") {
+        throw new TypeError("file must be a string");
+    }
+
+    const fileExt = extname(file);
+    if (fileExt === ".gz") {
+        const name = basename(file, ".tar.gz");
+
+        const wS = createReadStream(file)
+            .pipe(createGunzip())
+            .pipe(tar.extract(join(dirname(file), name)));
+
+        await new Promise((resolve) => wS.on("end", resolve));
+
+        return name;
+    }
+
+    throw new Error(`Unsupported extension ${fileExt}`);
+}
+
+/**
+ * @version 0.1.0
+ *
+ * @async
  * @function downloadNodeFile
  * @desc Download a given version Node.js file
  * @memberof Downloader#
- * @param {!String} version node.js version where we have to found the requested file
  * @param {String} [fileName=tar.gz] node.js file name
- * @param {String} [destination] destination dir
+ * @param {Object} options options
+ * @param {String} [options.version] node.js version where we have to found the requested file (default equal to local Node.js version).
+ * @param {String} [options.dest] destination dir (default equal to process.cwd())
  * @returns {Promise<String>}
  *
  * @throws {TypeError}
  * @throws {Error}
  *
  * @example
- * const { downloadNodeFile, constants: { File } } = require("@slimio/nodejs-downloader");
+ * const { downloadNodeFile, extract, constants: { File } } = require("@slimio/nodejs-downloader");
  *
  * async function main() {
- *     const file = await downloadNodeFile("v11.0.0", File.Headers, "./headers");
- *     console.log(`Headers.tar.gz location: ${file}`);
- *     // Then extract tar.gz file
+ *     const tarFile = await downloadNodeFile(File.Headers, {
+ *         version: "v11.0.0",
+ *         dest: "./headers"
+ *     });
+ *     const dirName = await extract(tarFile);
+ *     console.log(dirName);
  * }
  * main().catch(console.error);
  */
-async function downloadNodeFile(version, fileName = ".tar.gz", destination = process.cwd()) {
-    if (typeof version !== "string") {
-        throw new TypeError("version must be a string");
-    }
+async function downloadNodeFile(fileName = ".tar.gz", options = Object.create(null)) {
     if (typeof fileName !== "string") {
         throw new TypeError("fileName must be a string!");
     }
-    if (typeof destination !== "string") {
+
+    const { version = getLocalNodeVersion(), dest = process.cwd() } = options;
+    if (typeof version !== "string") {
+        throw new TypeError("version must be a string");
+    }
+    if (typeof dest !== "string") {
         throw new TypeError("destination must be a string");
     }
 
+    // Create required variable
     const completeFileName = `node-${version}${fileName}`;
-    const fileUrl = new URL(`${NODEJS_RELEASE}/${version}/${completeFileName}`);
-    const wS = got.stream(fileUrl);
-    const destFile = join(destination, completeFileName);
+    const destFile = join(dest, completeFileName);
 
+    // Write Stream
+    const wS = got.stream(`${NODEJS_RELEASE}/${version}/${completeFileName}`);
     await new Promise((resolve, reject) => {
-        wS.on("end", resolve).on("error", reject);
+        wS.on("end", resolve);
+        wS.on("error", reject);
         wS.pipe(createWriteStream(destFile));
     });
 
@@ -157,5 +201,6 @@ module.exports = {
     getLocalNodeVersion,
     getNodeRelease,
     downloadNodeFile,
+    extract,
     constants: { File }
 };
