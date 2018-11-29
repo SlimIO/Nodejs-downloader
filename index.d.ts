@@ -2,15 +2,16 @@
 
 declare namespace Downloader {
     interface Release {
+        name: string;
         version: string;
         date: Date;
         files: Set<String>;
-        npm: string;
         v8: string;
-        uv: string;
-        zlib: string;
-        openssl: string;
-        modules: number;
+        npm?: string;
+        uv?: string;
+        zlib?: string;
+        openssl?: string;
+        modules?: number;
         lts: boolean;
     }
 

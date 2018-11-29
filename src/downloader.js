@@ -83,6 +83,9 @@ async function getNodeRelease(version) {
 
     for (const release of nodeReleases) {
         if (release.version === version) {
+            const isLTS = typeof release.lts === "string";
+            Reflect.set(release, "name", isLTS ? release.lts : "N/A");
+            Reflect.set(release, "lts", isLTS);
             Reflect.set(release, "date", new Date(release.date));
             Reflect.set(release, "modules", Number(release.modules));
             Reflect.set(release, "files", new Set(release.files));
