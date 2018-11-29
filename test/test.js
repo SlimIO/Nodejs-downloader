@@ -93,6 +93,16 @@ ava("downloadNodeFile - Download Node.js headers", async(assert) => {
     assert.pass();
 });
 
+ava("extract - file must be a string", async(assert) => {
+    const error = await assert.throwsAsync(Downloader.extract(10), TypeError);
+    assert.is(error.message, "file must be a string");
+});
+
+ava("extract - Unsupported extension", async(assert) => {
+    const error = await assert.throwsAsync(Downloader.extract("test.txt"), Error);
+    assert.is(error.message, "Unsupported extension .txt");
+});
+
 ava("extract tar.gz file", async(assert) => {
     const tarFile = await Downloader.downloadNodeFile(File.Headers, {
         version: "v9.0.0",
