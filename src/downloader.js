@@ -1,5 +1,4 @@
 // Require Node.js Dependencies
-const { spawnSync } = require("child_process");
 const { createWriteStream, createReadStream } = require("fs");
 const { createGunzip } = require("zlib");
 const { join, basename, extname, dirname } = require("path");
