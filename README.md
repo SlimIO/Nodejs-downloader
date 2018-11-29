@@ -26,9 +26,6 @@ const {
 const DOWNLOAD = join(__dirname, "download");
 
 async function main() {
-    const currVersion = getLocalNodeVersion();
-    console.log(currVersion);
-
     const nodeRelease = await getNodeRelease("v8.0.0");
     console.log(nodeRelease);
 
@@ -45,17 +42,6 @@ main().catch(console.error);
 ```
 
 ## API
-
-### getLocalNodeVersion(): String
-Find the version of Node.js in use (by the running script).
-
-```js
-const { getNodeVersion } = require("@slimio/nodejs-downloader");
-
-console.log(getNodeVersion()); // v11.0.0
-```
-
-> !!! This method use `spawnSync`
 
 ### getNodeRelease(version: String): Release
 Retrieve information about a given Node.js release.
@@ -110,7 +96,7 @@ Stdout will look like this:
 ### downloadNodeFile(file: String, options: DownloadOptions): String
 Download a given release Node.js file... Use the constant `File` of the module to known all available Node.js files !
 
-- Default value for `version` is the result of `getLocalNodeVersion()`.
+- Default value for `version` is the result of `process.version`.
 - Default value for `dest` is the result of `process.cwd()`.
 
 ```js

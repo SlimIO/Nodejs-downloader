@@ -36,7 +36,6 @@ declare namespace Downloader {
         WinExe86: "-x86.msi"
     }
 
-    export function getLocalNodeVersion(): string;
     export function getNodeRelease(version: string): Promise<Release>;
     export function downloadNodeFile(file: keyof NodeFile, options?: DownloadOptions): Promise<string>;
     export function extract(file: string): Promise<string>;

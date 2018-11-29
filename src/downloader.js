@@ -39,27 +39,6 @@ const File = Object.freeze({
 });
 
 /**
- * @version 0.1.0
- *
- * @function getLocalNodeVersion
- * @desc Retrieve the current installed Node.js version on the system (warning: synchronous)
- * @memberof Downloader#
- * @returns {String}
- *
- * @example
- * const { getNodeVersion } = require("@slimio/nodejs-downloader");
- *
- * console.log(getNodeVersion()); // stdout current node.js version
- */
-function getLocalNodeVersion() {
-    const { stdout } = spawnSync(
-        process.argv[0], ["-v"], { encoding: "utf8" }
-    );
-
-    return stdout.replace(/\n|\r/g, "");
-}
-
-/**
  * @typedef {Object} Release
  * @property {String} version
  * @property {Date} date
@@ -183,7 +162,7 @@ async function downloadNodeFile(fileName = ".tar.gz", options = Object.create(nu
         throw new TypeError("fileName must be a string!");
     }
 
-    const { version = getLocalNodeVersion(), dest = process.cwd() } = options;
+    const { version = process.version, dest = process.cwd() } = options;
     if (typeof version !== "string") {
         throw new TypeError("version must be a string");
     }
@@ -207,7 +186,6 @@ async function downloadNodeFile(fileName = ".tar.gz", options = Object.create(nu
 }
 
 module.exports = {
-    getLocalNodeVersion,
     getNodeRelease,
     downloadNodeFile,
     extract,
