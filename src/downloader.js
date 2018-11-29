@@ -165,7 +165,7 @@ async function extract(file) {
  * }
  * main().catch(console.error);
  */
-async function downloadNodeFile(fileName = ".tar.gz", options = Object.create(null)) {
+async function downloadNodeFile(fileName = File.Headers, options = Object.create(null)) {
     if (typeof fileName !== "string") {
         throw new TypeError("fileName must be a string!");
     }
