@@ -58,7 +58,8 @@ main().catch(console.error);
 
 Stdout will look like this:
 ```bash
-{ version: 'v8.0.0',
+{ name: "N/A",
+  version: 'v8.0.0',
   date: 2017-05-30T00:00:00.000Z,
   files:
    Set {
@@ -93,7 +94,7 @@ Stdout will look like this:
   lts: false }
 ```
 
-### downloadNodeFile(file: String, options: DownloadOptions): String
+### downloadNodeFile(file?: String, options?: DownloadOptions): String
 Download a given release Node.js file... Use the constant `File` of the module to known all available Node.js files !
 
 - Default value for `version` is the result of `process.version`.
@@ -128,7 +129,6 @@ console.log(dirName);
 ## Roadmap
 
 - Add `.zip` support to **extract** method.
-- Add tests and coverage.
 - Complete the file list.
 
 ## LICENCE
