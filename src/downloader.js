@@ -183,12 +183,10 @@ async function downloadNodeFile(fileName = File.Headers, options = Object.create
     const destFile = join(dest, completeFileName);
 
     // Write Stream
-    const wS = got.stream(`${NODEJS_RELEASE}/${version}/${completeFileName}`);
-    await new Promise((resolve, reject) => {
-        wS.on("end", resolve);
-        wS.on("error", reject);
-        wS.pipe(createWriteStream(destFile));
-    });
+    await pipeline(
+        got.stream(`${NODEJS_RELEASE}/${version}/${completeFileName}`),
+        createWriteStream(destFile)
+    );
 
     return destFile;
 }
