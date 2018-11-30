@@ -19,7 +19,6 @@ $ yarn add @slimio/nodejs-downloader
 
 ```js
 const {
-    getLocalNodeVersion,
     getNodeRelease,
     downloadNodeFile,
     extract,
