@@ -16,7 +16,10 @@
     },
     "keywords": [
         "SlimIO",
-        "monitoring"
+        "Node.js",
+        "Downloader",
+        "Binary",
+        "Executable"
     ],
     "author": "SlimIO",
     "license": "MIT",
