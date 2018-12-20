@@ -63,24 +63,28 @@ ava("getNodeRelease - get non-lts version", async(assert) => {
 });
 
 ava("downloadNodeFile - fileName must be a string", async(assert) => {
-    const error = await assert.throwsAsync(Downloader.downloadNodeFile(5), TypeError);
-    assert.is(error.message, "fileName must be a string!");
+    await assert.throwsAsync(Downloader.downloadNodeFile(5), {
+        instanceOf: TypeError,
+        message: "fileName must be a string!"
+    });
 });
 
 ava("downloadNodeFile - version must be a string", async(assert) => {
-    const opt = {
-        version: 10
-    };
-    const error = await assert.throwsAsync(Downloader.downloadNodeFile(File.Headers, opt), TypeError);
-    assert.is(error.message, "version must be a string");
+    const opt = { version: 10 };
+
+    await assert.throwsAsync(Downloader.downloadNodeFile(File.Headers, opt), {
+        instanceOf: TypeError,
+        message: "version must be a string"
+    });
 });
 
 ava("downloadNodeFile - destination must be a string", async(assert) => {
-    const opt = {
-        dest: 10
-    };
-    const error = await assert.throwsAsync(Downloader.downloadNodeFile(File.Headers, opt), TypeError);
-    assert.is(error.message, "destination must be a string");
+    const opt = { dest: 10 };
+
+    await assert.throwsAsync(Downloader.downloadNodeFile(File.Headers, opt), {
+        instanceOf: TypeError,
+        message: "destination must be a string"
+    });
 });
 
 ava("downloadNodeFile - Download Node.js headers", async(assert) => {
@@ -94,13 +98,17 @@ ava("downloadNodeFile - Download Node.js headers", async(assert) => {
 });
 
 ava("extract - file must be a string", async(assert) => {
-    const error = await assert.throwsAsync(Downloader.extract(10), TypeError);
-    assert.is(error.message, "file must be a string");
+    await assert.throwsAsync(Downloader.extract(10), {
+        instanceOf: TypeError,
+        message: "file must be a string"
+    });
 });
 
 ava("extract - Unsupported extension", async(assert) => {
-    const error = await assert.throwsAsync(Downloader.extract("test.txt"), Error);
-    assert.is(error.message, "Unsupported extension .txt");
+    await assert.throwsAsync(Downloader.extract("test.txt"), {
+        instanceOf: Error,
+        message: "Unsupported extension .txt"
+    });
 });
 
 ava("extract tar.gz file", async(assert) => {
