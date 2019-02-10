@@ -10,3 +10,4 @@ CONTRIBUTING.md
 .gitignore
 commitlint.config.js
 temp/
+.travis.yml
