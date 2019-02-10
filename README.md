@@ -1,8 +1,10 @@
 # nodejs-downloader
 
+![version](https://img.shields.io/badge/dynamic/json.svg?url=https://raw.githubusercontent.com/SlimIO/nodejs-downloader/master/package.json&query=$.version&label=Version)
 [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/SlimIO/nodejs-downloader/commit-activity)
 [![GitHub license](https://img.shields.io/github/license/Naereen/StrapDown.js.svg)](https://github.com/SlimIO/nodejs-downloader/blob/master/LICENSE)
-![V1.0](https://img.shields.io/badge/version-0.2.0-blue.svg)
+![2DEP](https://img.shields.io/badge/Dependencies-2-yellow.svg)
+[![Known Vulnerabilities](https://snyk.io/test/github/SlimIO/nodejs-downloader/badge.svg?targetFile=package.json)](https://snyk.io/test/github/SlimIO/nodejs-downloader?targetFile=package.json)
 [![Build Status](https://travis-ci.com/SlimIO/Nodejs-downloader.svg?branch=master)](https://travis-ci.com/SlimIO/Nodejs-downloader)
 
 Node.js binary and headers downloader
