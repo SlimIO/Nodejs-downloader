@@ -139,5 +139,5 @@ console.log(dirName);
 - Fix security issue with `tar-fs` package.
 - Complete the file list (not all files are supported).
 
-## LICENCE
+## License
 MIT
