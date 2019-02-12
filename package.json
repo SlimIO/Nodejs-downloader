@@ -5,7 +5,7 @@
     "main": "index.js",
     "scripts": {
         "prepublishOnly": "pkg-ok",
-        "test": "ava --verbose --timeout=5s",
+        "test": "ava --verbose --timeout=10s",
         "doc": "jsdoc -c ./jsdoc.json -r -R ./README.md -P ./package.json --verbose",
         "coverage": "nyc ava",
         "report": "nyc report --reporter=html"
@@ -28,6 +28,7 @@
     },
     "homepage": "https://github.com/SlimIO/nodejs-downloader#readme",
     "dependencies": {
+        "@slimio/unzipper": "0.0.1",
         "got": "^9.6.0",
         "tar-fs": "^2.0.0"
     },

@@ -134,3 +134,28 @@ ava("extract tar.gz file", async(assert) => {
         });
     });
 });
+
+
+ava("extract zip file", async(assert) => {
+    const zipFile = await Downloader.downloadNodeFile(File.WinBinary64, {
+        version: "v7.0.0",
+        dest: __dirname
+    });
+
+    await access(zipFile, R_OK);
+    const dirName = await Downloader.extract(zipFile);
+
+    await unlink(zipFile);
+    const stats = await stat(dirName);
+    assert.true(stats.isDirectory());
+
+    await new Promise((resolve, reject) => {
+        rimraf(dirName, (error) => {
+            if (error) {
+                return reject(error);
+            }
+
+            return resolve();
+        });
+    });
+});

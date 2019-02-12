@@ -8,6 +8,7 @@ const { promisify } = require("util");
 // Require Third-party Dependencies
 const got = require("got");
 const tar = require("tar-fs");
+const unzip = require("@slimio/unzipper");
 
 // CONSTANTS
 const NODEJS_RELEASE_INDEX_URL = new URL("https://nodejs.org/download/release/index.json");
@@ -129,6 +130,13 @@ async function extract(file) {
             createGunzip(),
             tar.extract(destDirName)
         );
+
+        return destDirName;
+    }
+    if (fileExt === ".zip") {
+        const name = basename(file, ".zip");
+        const destDirName = join(dirname(file), name);
+        await unzip(file, { dir: destDirName });
 
         return destDirName;
     }
