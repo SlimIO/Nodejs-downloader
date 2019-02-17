@@ -120,28 +120,29 @@ async function extract(file) {
         throw new TypeError("file must be a string");
     }
 
-    const fileExt = extname(file);
-    if (fileExt === ".gz") {
-        const name = basename(file, ".tar.gz");
-        const destDirName = join(dirname(file), name);
+    const fileExtension = extname(file);
+    switch (fileExtension) {
+        case ".gz": {
+            const name = basename(file, ".tar.gz");
+            const destDirName = join(dirname(file), name);
 
-        await pipeline(
-            createReadStream(file),
-            createGunzip(),
-            tar.extract(destDirName)
-        );
+            await pipeline(
+                createReadStream(file),
+                createGunzip(),
+                tar.extract(destDirName)
+            );
 
-        return destDirName;
+            return destDirName;
+        }
+        case ".zip": {
+            const name = basename(file, ".zip");
+            const destDirName = join(dirname(file), name);
+            await unzip(file, { dir: destDirName });
+
+            return destDirName;
+        }
+        default: throw new Error(`Unsupported extension ${fileExtension}`);
     }
-    if (fileExt === ".zip") {
-        const name = basename(file, ".zip");
-        const destDirName = join(dirname(file), name);
-        await unzip(file, { dir: destDirName });
-
-        return destDirName;
-    }
-
-    throw new Error(`Unsupported extension ${fileExt}`);
 }
 
 /**
