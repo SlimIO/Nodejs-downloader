@@ -1,6 +1,6 @@
 {
     "name": "@slimio/nodejs-downloader",
-    "version": "0.2.0",
+    "version": "0.3.0",
     "description": "Node.js binary and headers downloader",
     "main": "index.js",
     "scripts": {
