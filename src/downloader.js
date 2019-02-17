@@ -123,8 +123,7 @@ async function extract(file) {
     const fileExtension = extname(file);
     switch (fileExtension) {
         case ".gz": {
-            const name = basename(file, ".tar.gz");
-            const destDirName = join(dirname(file), name);
+            const destDirName = join(dirname(file), basename(file, ".tar.gz"));
 
             await pipeline(
                 createReadStream(file),
@@ -135,8 +134,7 @@ async function extract(file) {
             return destDirName;
         }
         case ".zip": {
-            const name = basename(file, ".zip");
-            const destDirName = join(dirname(file), name);
+            const destDirName = join(dirname(file), basename(file, ".zip"));
             await unzip(file, { dir: destDirName });
 
             return destDirName;
