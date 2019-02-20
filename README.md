@@ -50,7 +50,9 @@ main().catch(console.error);
 
 ## API
 
-### getNodeRelease(version: String): Release
+<details><summary>getNodeRelease(version: String): Release</summary
+<br />
+
 Retrieve information about a given Node.js release.
 
 ```js
@@ -100,8 +102,11 @@ Stdout will look like this:
   modules: 57,
   lts: false }
 ```
+</details>
 
-### downloadNodeFile(file?: String, options?: DownloadOptions): String
+<details><summary>downloadNodeFile(file?: String, options?: DownloadOptions): String</summary
+<br />
+
 Download a given release Node.js file... Use the constant `File` of the module to known all available Node.js files !
 
 - Default value for `version` is the result of `process.version`.
@@ -119,8 +124,11 @@ async function main() {
 }
 main().catch(console.error);
 ```
+</details>
 
-### extract(file: String): String
+<details><summary>extract(file: String): String</summary
+<br />
+
 Extract `.tar.gz` and `.zip` file. This method help you to extract Node.js files !
 
 Following the downloadNodeFile example:
@@ -132,6 +140,7 @@ const tarFile = await downloadNodeFile(File.Headers, {
 const dirName = await extract(tarFile);
 console.log(dirName);
 ```
+</details>
 
 ## Roadmap v0.3.0
 
