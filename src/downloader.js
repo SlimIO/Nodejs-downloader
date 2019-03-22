@@ -4,9 +4,9 @@ const { createGunzip } = require("zlib");
 const { join, basename, extname, dirname } = require("path");
 const stream = require("stream");
 const { promisify } = require("util");
+const https = require("https");
 
 // Require Third-party Dependencies
-const got = require("got");
 const tar = require("tar-fs");
 const unzip = require("@slimio/unzipper");
 
@@ -84,7 +84,23 @@ async function getNodeRelease(version) {
     }
 
     /** @type {{ body: Release[] }} */
-    const { body: nodeReleases } = await got(NODEJS_RELEASE_INDEX_URL, { json: true });
+    const nodeReleases = await new Promise((resolve, reject) => {
+        https.get(NODEJS_RELEASE_INDEX_URL, (res) => {
+            let body = "";
+            res.on("data", (chunk) => {
+                body += chunk;
+            });
+            res.once("error", reject);
+            res.once("end", () => {
+                try {
+                    resolve(JSON.parse(body));
+                }
+                catch (err) {
+                    reject(err);
+                }
+            });
+        });
+    });
 
     for (const release of nodeReleases) {
         if (release.version === version) {
@@ -189,11 +205,17 @@ async function downloadNodeFile(fileName = File.Headers, options = Object.create
     const completeFileName = `node-${version}${fileName}`;
     const destFile = join(dest, completeFileName);
 
-    // Write Stream
-    await pipeline(
-        got.stream(`${NODEJS_RELEASE}/${version}/${completeFileName}`),
-        createWriteStream(destFile)
-    );
+    await new Promise((resolve, reject) => {
+        const file = createWriteStream(destFile);
+        https.get(`${NODEJS_RELEASE}/${version}/${completeFileName}`, (res) => {
+            res.pipe(file);
+            res.once("error", reject);
+            res.once("end", () => {
+                file.close();
+                resolve();
+            });
+        });
+    });
 
     return destFile;
 }

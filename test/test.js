@@ -1,8 +1,9 @@
 // Require Node.js Dependencies
 const {
-    promises: { access, unlink, stat },
+    promises: { access, unlink, stat, readdir },
     constants: { R_OK }
 } = require("fs");
+const { extname, join } = require("path");
 
 // Require Third-party Dependencies
 const ava = require("ava");
@@ -12,6 +13,12 @@ const rimraf = require("rimraf");
 // Require Internal Dependencies
 const Downloader = require("../index");
 const File = Downloader.constants.File;
+
+ava.after(async(assert) => {
+    const toDelete = (await readdir(__dirname)).filter((file) => extname(file) !== ".js");
+    await Promise.all(toDelete.map((file) => unlink(join(__dirname, file))));
+    assert.pass();
+});
 
 ava("Downloader should export constants", (assert) => {
     assert.true(Reflect.has(Downloader, "constants"));
