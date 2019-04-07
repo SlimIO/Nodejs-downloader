@@ -59,6 +59,7 @@ typings/
 
 # JSDoc
 docs/
+jsdoc/
 temp/
 test/*
 !test/test.js
