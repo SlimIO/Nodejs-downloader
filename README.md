@@ -167,5 +167,12 @@ interface NodeFile {
 }
 ```
 
+## Dependencies
+
+| package name | security risk ? | description |
+| --- | --- | --- |
+| tar-fs | ⚠️ high | tar-fs is used to extract `tar.gz` archive. |
+| @slimio/unzipper | ⚠️ high | unzipper is a modern yauzl wrapper used to unzip archive. |
+
 ## License
 MIT
