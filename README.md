@@ -54,7 +54,7 @@ main().catch(console.error);
 
 ## API
 
-<details><summary>getNodeRelease(version: String): Release</summary
+<details><summary>getNodeRelease(version: String): Release</summary>
 <br />
 
 Retrieve information about a given Node.js release.
@@ -108,7 +108,7 @@ Stdout will look like this:
 ```
 </details>
 
-<details><summary>downloadNodeFile(file?: String, options?: DownloadOptions): String</summary
+<details><summary>downloadNodeFile(file?: String, options?: DownloadOptions): String</summary>
 <br />
 
 Download a given release Node.js file... Use the constant `File` of the module to known all available Node.js files !
@@ -145,6 +145,27 @@ const dirName = await extract(tarFile);
 console.log(dirName);
 ```
 </details>
+
+### Files
+File CONSTANT is described by the following interface
+```ts
+interface NodeFile {
+    Headers: "-headers.tar.gz",
+    AixPPC64: "-aix-ppc64.tar.gz",
+    Darwin64: "-darwin-x64.tar.gz",
+    Arm64: "-linux-arm64.tar.gz",
+    Armv6l: "-linux-armv6l.tar.gz",
+    Armv7l: "-linux-armv7l.tar.gz",
+    PPC64le: "-linux-ppc64le.tar.gz",
+    S390x: "-linux-s390x.tar.gz",
+    Linux64: "-linux-x64.tar.gz",
+    SunOS64: "-sunos-x64.tar.gz",
+    WinBinary64: "-win-x64.zip",
+    WinBinary86: "-win-x86.zip",
+    WinExe64: "-x64.msi",
+    WinExe86: "-x86.msi"
+}
+```
 
 ## License
 MIT
