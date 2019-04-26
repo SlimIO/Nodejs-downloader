@@ -25,6 +25,7 @@ $ yarn add @slimio/nodejs-downloader
 ## Usage example
 
 ```js
+const { join } = require("path");
 const {
     getNodeRelease,
     downloadNodeFile,
@@ -129,7 +130,7 @@ main().catch(console.error);
 ```
 </details>
 
-<details><summary>extract(file: String): String</summary
+<details><summary>extract(file: String): String</summary>
 <br />
 
 Extract `.tar.gz` and `.zip` file. This method help you to extract Node.js files !
@@ -144,10 +145,6 @@ const dirName = await extract(tarFile);
 console.log(dirName);
 ```
 </details>
-
-## Roadmap v0.3.0
-
-- Complete the file list (not all files are supported).
 
 ## License
 MIT
