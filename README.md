@@ -168,11 +168,12 @@ interface NodeFile {
 ```
 
 ## Dependencies
+This project is covered by the SlimIO security policy and undergoes regular security audits.
 
-| package name | security risk ? | description |
-| --- | --- | --- |
-| tar-fs | ⚠️ high | tar-fs is used to extract `tar.gz` archive. |
-| @slimio/unzipper | ⚠️ high | unzipper is a modern yauzl wrapper used to unzip archive. |
+| Name | Refactoring | Security Risk | Usage |
+| --- | --- | --- | --- |
+| [tar-fs](https://github.com/mafintosh/tar-fs) | ⚠️ Major | ⚠️ high | Used to extract `tar.gz` archive in extract() method. |
+| [@slimio/unzipper](https://github.com/SlimIO/unzipper#readme) | ⚠️ Major | ⚠️ high | Modern yauzl wrapper used to unzip `.zip` archive in extract() method. |
 
 ## License
 MIT
