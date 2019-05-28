@@ -142,7 +142,6 @@ ava("extract tar.gz file", async(assert) => {
     });
 });
 
-
 ava("extract zip file", async(assert) => {
     const zipFile = await Downloader.downloadNodeFile(File.WinBinary64, {
         version: "v7.0.0",
