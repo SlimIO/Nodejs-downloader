@@ -5,7 +5,7 @@
     "main": "index.js",
     "scripts": {
         "prepublishOnly": "pkg-ok",
-        "test": "ava --verbose --timeout=20s",
+        "test": "cross-env psp && ava --verbose --timeout=20s",
         "doc": "jsdoc -c ./jsdoc.json -r -R ./README.md -P ./package.json --verbose",
         "coverage": "nyc npm test",
         "report": "nyc report --reporter=html"
@@ -52,7 +52,7 @@
     },
     "husky": {
         "hooks": {
-            "pre-push": "cross-env npm test && eslint src/** && psp",
+            "pre-push": "cross-env npm test && eslint src/**",
             "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
         }
     },
