@@ -5,7 +5,7 @@
     "main": "index.js",
     "scripts": {
         "prepublishOnly": "pkg-ok",
-        "test": "ava --verbose --timeout=10s",
+        "test": "ava --verbose --timeout=20s",
         "doc": "jsdoc -c ./jsdoc.json -r -R ./README.md -P ./package.json --verbose",
         "coverage": "nyc ava",
         "report": "nyc report --reporter=html"
