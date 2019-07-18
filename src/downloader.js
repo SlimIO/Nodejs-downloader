@@ -1,3 +1,5 @@
+"use strict";
+
 // Require Node.js Dependencies
 const { createWriteStream, createReadStream } = require("fs");
 const { createGunzip } = require("zlib");
@@ -22,8 +24,8 @@ const pipeline = promisify(stream.pipeline);
  */
 
 /**
- * @const File
- * @desc Available Node.js file
+ * @constant File
+ * @description Available Node.js file
  * @memberof Downloader#
  */
 const File = Object.freeze({
@@ -44,17 +46,17 @@ const File = Object.freeze({
 });
 
 /**
- * @typedef {Object} Release
- * @property {String} version
+ * @typedef {object} Release
+ * @property {string} version
  * @property {Date} date
- * @property {Set<String>} files
- * @property {String} npm
- * @property {String} v8
- * @property {String} uv
- * @property {String} zlib
- * @property {String} openssl
- * @property {Number} modules
- * @property {Boolean} lts
+ * @property {Set<string>} files
+ * @property {string} npm
+ * @property {string} v8
+ * @property {string} uv
+ * @property {string} zlib
+ * @property {string} openssl
+ * @property {number} modules
+ * @property {boolean} lts
  */
 
 /**
@@ -62,9 +64,9 @@ const File = Object.freeze({
  *
  * @async
  * @function getNodeRelease
- * @desc Get a given Node.js release.
+ * @description Get a given Node.js release.
  * @memberof Downloader#
- * @param {String=} version nodejs release version (you want)
+ * @param {string} [version] nodejs release version (you want)
  * @returns {Promise<Release>}
  *
  * @throws {TypeError}
@@ -122,11 +124,11 @@ async function getNodeRelease(version) {
  * @version 0.1.0
  *
  * @async
- * @method extract
- * @desc Extract tar.gz and .zip file
+ * @function extract
+ * @description Extract tar.gz and .zip file
  * @memberof Downloader#
- * @param {!String} file file to extract
- * @returns {Promise<String>}
+ * @param {!string} file file to extract
+ * @returns {Promise<string>}
  *
  * @throws {TypeError}
  * @throws {Error}
@@ -164,13 +166,13 @@ async function extract(file) {
  *
  * @async
  * @function downloadNodeFile
- * @desc Download a given version Node.js file
+ * @description Download a given version Node.js file
  * @memberof Downloader#
- * @param {String} [fileName=tar.gz] node.js file name
- * @param {Object} [options] options
- * @param {String} [options.version] node.js version where we have to found the requested file (default equal to local Node.js version).
- * @param {String} [options.dest] destination dir (default equal to process.cwd())
- * @returns {Promise<String>}
+ * @param {string} [fileName=tar.gz] node.js file name
+ * @param {object} [options] options
+ * @param {string} [options.version] node.js version where we have to found the requested file (default equal to local Node.js version).
+ * @param {string} [options.dest] destination dir (default equal to process.cwd())
+ * @returns {Promise<string>}
  *
  * @throws {TypeError}
  * @throws {Error}
