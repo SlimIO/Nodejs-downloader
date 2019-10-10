@@ -33,7 +33,7 @@
     },
     "homepage": "https://github.com/SlimIO/nodejs-downloader#readme",
     "dependencies": {
-        "@slimio/unzipper": "^0.1.0",
+        "@slimio/unzipper": "^0.2.0",
         "tar-fs": "^2.0.0"
     },
     "devDependencies": {
