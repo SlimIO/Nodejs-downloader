@@ -11,7 +11,7 @@
 Node.js binary and headers downloader. This package allow us to programmatically exploit the following Node.js Release API: https://nodejs.org/download/release.
 
 ## Requirements
-- [Node.js](https://nodejs.org/en/) v10 or higher
+- [Node.js](https://nodejs.org/en/) v12 or higher
 
 ## Getting Started
 
