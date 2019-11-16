@@ -1,6 +1,6 @@
 // Require Node.js Dependencies
 const {
-    promises: { access, unlink, stat, readdir },
+    promises: { access, unlink, stat, readdir, rmdir },
     constants: { R_OK }
 } = require("fs");
 const { extname, join } = require("path");
@@ -8,7 +8,6 @@ const { extname, join } = require("path");
 // Require Third-party Dependencies
 const ava = require("ava");
 const is = require("@slimio/is");
-const rimraf = require("rimraf");
 
 // Require Internal Dependencies
 const Downloader = require("../index");
@@ -131,15 +130,7 @@ ava("extract tar.gz file", async(assert) => {
     const stats = await stat(dirName);
     assert.true(stats.isDirectory());
 
-    await new Promise((resolve, reject) => {
-        rimraf(dirName, (error) => {
-            if (error) {
-                return reject(error);
-            }
-
-            return resolve();
-        });
-    });
+    await rmdir(dirName, { recursive: true });
 });
 
 ava("extract zip file", async(assert) => {
@@ -155,13 +146,5 @@ ava("extract zip file", async(assert) => {
     const stats = await stat(dirName);
     assert.true(stats.isDirectory());
 
-    await new Promise((resolve, reject) => {
-        rimraf(dirName, (error) => {
-            if (error) {
-                return reject(error);
-            }
-
-            return resolve();
-        });
-    });
+    await rmdir(dirName, { recursive: true });
 });
