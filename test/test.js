@@ -33,7 +33,9 @@ ava("Downloader should export constants", (assert) => {
 });
 
 ava("getNodeRelease - version must be a string", async(assert) => {
-    const error = await assert.throwsAsync(Downloader.getNodeRelease(5), TypeError);
+    const error = await assert.throwsAsync(Downloader.getNodeRelease(5), {
+        instanceOf: TypeError
+    });
     assert.is(error.message, "version should be typeof string");
 });
 
