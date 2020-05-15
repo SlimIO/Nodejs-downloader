@@ -7,7 +7,6 @@
 ![size](https://img.shields.io/bundlephobia/min/@slimio/nodejs-downloader)
 [![Known Vulnerabilities](https://snyk.io/test/github/SlimIO/nodejs-downloader/badge.svg?targetFile=package.json)](https://snyk.io/test/github/SlimIO/nodejs-downloader?targetFile=package.json)
 [![Build Status](https://travis-ci.com/SlimIO/Nodejs-downloader.svg?branch=master)](https://travis-ci.com/SlimIO/Nodejs-downloader)
-[![Greenkeeper badge](https://badges.greenkeeper.io/SlimIO/Nodejs-downloader.svg)](https://greenkeeper.io/)
 
 Node.js binary and headers downloader. This package allow us to programmatically exploit the following Node.js Release API: https://nodejs.org/download/release.
 
