@@ -34,7 +34,7 @@
     "homepage": "https://github.com/SlimIO/nodejs-downloader#readme",
     "dependencies": {
         "@slimio/unzipper": "^0.2.0",
-        "tar-fs": "^2.0.0"
+        "tar-fs": "^2.1.0"
     },
     "devDependencies": {
         "@commitlint/cli": "^8.2.0",
